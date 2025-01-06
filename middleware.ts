@@ -5,7 +5,7 @@ import { verifyToken } from './lib/auth'
 export async function middleware(request: NextRequest) {
   // Check for authentication token
   const cookie = request.cookies.get('token');
-  console.log("This is cookie" + cookie);
+  console.log(cookie);
   const token = request.cookies.get('token')?.value
 
   if (!token) {
