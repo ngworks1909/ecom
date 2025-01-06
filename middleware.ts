@@ -4,8 +4,6 @@ import { verifyToken } from './lib/auth'
 
 export async function middleware(request: NextRequest) {
   // Check for authentication token
-  const cookie = request.cookies.get('token');
-  console.log(cookie);
   const token = request.cookies.get('token')?.value
 
   if (!token) {
@@ -16,10 +14,6 @@ export async function middleware(request: NextRequest) {
     const payload = await verifyToken(token)
     if (!payload) {
       throw new Error('Invalid token')
-    }
-
-    if (request.nextUrl.pathname === '/') {
-      return NextResponse.redirect(new URL('/marketplace', request.url));
     }
     // For admin routes, verify user role
     if (request.nextUrl.pathname.startsWith('/admin')) {
