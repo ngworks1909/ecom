@@ -4,6 +4,9 @@ import { verifyToken } from './lib/auth'
 
 export async function middleware(request: NextRequest) {
   // Check for authentication token
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.redirect(new URL('/marketplace', request.url));
+  }
   const token = request.cookies.get('token')?.value
 
   if (!token) {
@@ -46,6 +49,7 @@ export const config = {
     '/api/admin/:path*',
     '/api/marketplace/:path*',
     '/api/profile/:path*',
+    '/'
   ]
 }
 
