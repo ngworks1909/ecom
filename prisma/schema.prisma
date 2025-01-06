@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  name           String
+  password       String
+  role           Role          @default(BUYER)
+  walletBalance  Float         @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  purchases      Transaction[] @relation("purchases")
+  resales        Transaction[] @relation("resales")
+}
+
+model Item {
+  id          String        @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  resalePrice Float
+  imageUrl    String
+  status      ItemStatus   @default(AVAILABLE)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  transactions Transaction[]
+}
+
+model Transaction {
+  id        String          @id @default(cuid())
+  type      TransactionType
+  amount    Float
+  itemId    String
+  buyerId   String
+  sellerId  String?
+  status    PaymentStatus   @default(PENDING)
+  createdAt DateTime        @default(now())
+  item      Item           @relation(fields: [itemId], references: [id])
+  buyer     User           @relation("purchases", fields: [buyerId], references: [id])
+  seller    User?          @relation("resales", fields: [sellerId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  BUYER
+}
+
+enum ItemStatus {
+  AVAILABLE
+  SOLD
+}
+
+enum TransactionType {
+  PURCHASE
+  RESALE
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+
