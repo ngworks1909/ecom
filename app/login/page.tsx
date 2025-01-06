@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import Link from 'next/link'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -44,6 +45,7 @@ export default function LoginPage() {
     }
   }
 
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-md">
@@ -69,6 +71,12 @@ export default function LoginPage() {
               {loading ? 'Logging in...' : 'Login'}
             </Button>
           </form>
+          <div className='flex gap-3 items-center mt-4 flex-col justify-center'>
+            <p className="text-sm">
+              OR
+            </p>
+            <Button className='w-full' variant={"outline"} onClick={(e) => {e.preventDefault(); router.push('/register')}} >Signup</Button>
+          </div>
         </CardContent>
       </Card>
     </div>

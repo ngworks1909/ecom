@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { registerSchema } from '@/lib/validations'
 import type { z } from 'zod'
+import Link from 'next/link'
 
 type FormData = z.infer<typeof registerSchema>
 
@@ -118,6 +119,12 @@ export default function RegisterPage() {
               </Button>
             </form>
           </Form>
+          <div className='flex gap-3 items-center mt-4 flex-col justify-center'>
+            <p className="text-sm">
+              OR
+            </p>
+            <Button className='w-full' variant={"outline"} onClick={(e) => {e.preventDefault(); router.push('/login')}} >Login</Button>
+          </div>
         </CardContent>
       </Card>
     </div>
