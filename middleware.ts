@@ -15,6 +15,10 @@ export async function middleware(request: NextRequest) {
     if (!payload) {
       throw new Error('Invalid token')
     }
+
+    if (request.nextUrl.pathname === '/') {
+      return NextResponse.redirect(new URL('/marketplace', request.url));
+    }
     // For admin routes, verify user role
     if (request.nextUrl.pathname.startsWith('/admin')) {
       const res = await fetch(`${request.nextUrl.origin}/api/user/${payload.userId}`)
@@ -32,7 +36,7 @@ export async function middleware(request: NextRequest) {
   } catch (error) {
     // Clear invalid token
     const response = NextResponse.redirect(new URL('/login', request.url))
-    // response.cookies.delete('token')
+    response.cookies.delete('token')
     return response
   }
 }
