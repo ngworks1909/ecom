@@ -1,4 +1,4 @@
-// File: C:\Users\Nithin\OneDrive\Desktop\work\digital-marketplace\app\layout.tsx
+// File: C:\Users\Nithin\OneDrive\Desktop\work\ecom\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
