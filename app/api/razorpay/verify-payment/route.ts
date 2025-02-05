@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     } = await request.json()
 
     const body = razorpay_order_id + "|" + razorpay_payment_id
-    const expectedSignature = createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+    const expectedSignature = createHmac('sha256', process.env.RAZORPAY_KEY_SECRET ?? "secret")
       .update(body.toString())
       .digest('hex')
 
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
           type: 'PURCHASE',
           amount: 0, // Set the actual amount
           itemId,
-          buyerId: session.userId,
+          buyerId: session.userId as string,
           status: 'COMPLETED'
         }
       }),
